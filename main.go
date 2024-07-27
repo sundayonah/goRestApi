@@ -60,7 +60,7 @@ func main() {
 	r.HandleFunc("/employees", empService.GetAllEmployees).Methods(http.MethodGet)
 	r.HandleFunc("/employee/{id}", empService.UpdateEmployeeByID).Methods(http.MethodPut)
 	r.HandleFunc("/employee/{id}", empService.DeleteEmployeeByID).Methods(http.MethodDelete)
-	r.HandleFunc("/employees/", empService.DeleteAllEmployees).Methods(http.MethodDelete)
+	r.HandleFunc("/employees", empService.DeleteAllEmployees).Methods(http.MethodDelete)
 
 
 	log.Println("Server is running on port :4444")

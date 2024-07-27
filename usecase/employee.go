@@ -56,8 +56,6 @@ func (svc *EmployeeService) CreateEmployee(w http.ResponseWriter, r *http.Reques
 
 	log.Println("employee inserted with id ", insertID, emp)
 }
-
-
 func (svc *EmployeeService) GetEmployeeByID(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
 
@@ -92,7 +90,6 @@ func (svc *EmployeeService) GetAllEmployees(w http.ResponseWriter, r *http.Reque
 
     repo := repository.EmployeeRepo{MongoCollection: svc.MongoCollection}
 
-    // find employee by id
     emp, err := repo.FindAllEmployee()
     if err!= nil {
         w.WriteHeader(http.StatusBadRequest)
@@ -104,7 +101,6 @@ func (svc *EmployeeService) GetAllEmployees(w http.ResponseWriter, r *http.Reque
     res.Data = emp
     w.WriteHeader(http.StatusOK)
 
-    log.Println("employee retrieved ", emp)
 }
 func (svc *EmployeeService) UpdateEmployeeByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
@@ -187,7 +183,7 @@ func (svc *EmployeeService) DeleteAllEmployees(w http.ResponseWriter, r *http.Re
     repo := repository.EmployeeRepo{MongoCollection: svc.MongoCollection}
 
     // delete all employee
-    deletedCount, err := repo.DeleteAllEmployee()
+    deletedCount, err := repo.DeleteAllEmployees()
     if err!= nil {
         w.WriteHeader(http.StatusBadRequest)
         log.Println("delete error", err)
