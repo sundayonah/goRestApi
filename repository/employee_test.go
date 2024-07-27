@@ -48,7 +48,8 @@ func TestMongoOperation(t *testing.T) {
 	// insert employee 1 data
 	t.Run("Insert Employee 1", func(t *testing.T) {
 		emp := model.Employee{
-			Name: "John Doe",
+			FirstName: "John",
+			LastName: "Doe",
 			Department: "Engineering",
 			EmployeeID: emp1,
 		}
@@ -62,9 +63,10 @@ func TestMongoOperation(t *testing.T) {
 	})
 
 		// insert employee 2 data
-	t.Run("Insert Employee 1", func(t *testing.T) {
+	t.Run("Insert Employee 2", func(t *testing.T) {
 		emp := model.Employee{
-			Name: "Onah Sunday",
+			FirstName: "Onah",
+			LastName: "Sunday",
 			Department: "Engineering",
 			EmployeeID: emp2,
 		}
@@ -84,7 +86,7 @@ func TestMongoOperation(t *testing.T) {
 //         if err!= nil {
 //             t.Fatal("get 1 operation falied", err)
 //         }
-//         t.Log("Retrieved employee 1:", result.Name)
+//         t.Log("Retrieved employee 1:", result.FirstName)
 //     })
 
 // // get all employee
@@ -100,7 +102,7 @@ func TestMongoOperation(t *testing.T) {
 	// // update employee 1
 	// t.Run("Update Employee 1", func(t *testing.T) {
     //     emp := model.Employee{
-    //         Name: "John Doe Updated",
+    //         FirstName: "John Doe Updated",
     //         Department: "Engineering",
     //         EmployeeID: emp1,
     //     }
@@ -120,7 +122,7 @@ func TestMongoOperation(t *testing.T) {
     //     if err!= nil {
     //         t.Fatal("find 1 operation falied", err)
     //     }
-    //     t.Log("Found employee 1:", result.Name)
+    //     t.Log("Found employee 1:", result.FirstName)
     // })
 
     // // delete employee 1 data
@@ -134,14 +136,14 @@ func TestMongoOperation(t *testing.T) {
     // })
 
 	// // delete all employee
-	// t.Run("Delete All Employees", func(t *testing.T) {
-    //     result, err := empRepo.DeleteAllEmployee()
+	t.Run("Delete All Employees", func(t *testing.T) {
+        result, err := empRepo.DeleteAllEmployees()
 
-    //     if err!= nil {
-    //         t.Fatal("delete all operation falied", err)
-    //     }
-    //     t.Log("Deleted all employees:", result)
-    // })
+        if err!= nil {
+            t.Fatal("delete all operation falied", err)
+        }
+        t.Log("Deleted all employees:", result)
+    })
 
     // // get employee 2 data
     // t.Run("Get Employee 2", func(t *testing.T) {
@@ -150,7 +152,7 @@ func TestMongoOperation(t *testing.T) {
     //     if err!= nil {
     //         t.Fatal("get 2 operation falied", err)
     //     }
-    //     t.Log("Retrieved employee 2:", result.Name)
+    //     t.Log("Retrieved employee 2:", result.FirstName)
     // })
 
     // // get all employee
