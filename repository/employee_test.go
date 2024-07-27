@@ -29,7 +29,6 @@ if err!= nil {
 log.Println("ping success")
 
 return mongoTestClient
-
 }
 
 
