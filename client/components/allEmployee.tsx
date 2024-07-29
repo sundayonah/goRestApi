@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useEmployeesManager } from './EmployeeComp';
-
-interface Employee {
-   employee_id: string;
-   firstname: string;
-   lastname: string;
-   department: string;
-   // Other properties...
-}
+import { Employee } from '@/types/interfaces';
+import EditProfile from './editProfile';
 
 const AllEmployee = () => {
-   const { getAllEmployees, deleteEmployee } = useEmployeesManager();
+   const {
+      getAllEmployees,
+      deleteEmployee,
+      updateEmployeeByID,
+   } = useEmployeesManager();
    const [employees, setEmployees] = useState<Employee[]>([]);
+   const [showEditProfile, setShowEditProfile] = useState(false);
+   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+      null
+   );
 
    useEffect(() => {
       const fetchEmployees = async () => {
@@ -33,6 +35,38 @@ const AllEmployee = () => {
       }
    };
 
+   const handleUpdate = async (
+      employeeId: string,
+      updatedData: Partial<Employee>
+   ) => {
+      try {
+         const updatedEmployee = await updateEmployeeByID(
+            employeeId,
+            updatedData
+         );
+         console.log('Employee updated successfully:', updatedEmployee);
+         // Optionally, refetch the employees list to ensure consistency
+         const employeesData = await getAllEmployees();
+         setEmployees(employeesData.data);
+         setShowEditProfile(false); // Close the dialog after successful update
+         // setSelectedEmployee(null); // Reset the selected employee
+      } catch (error) {
+         console.error('Failed to update employee:', error);
+      }
+   };
+
+   // const handleEditClick = (employee: Employee) => {
+   //    console.log(employee);
+   //    setSelectedEmployee(employee);
+   //    setShowEditProfile(true);
+   // };
+   const closeModal = () => {
+      setShowEditProfile(false);
+      setSelectedEmployee(null);
+   };
+
+   console.log(selectedEmployee);
+
    return (
       <div className="p-4 min-h-screen">
          <div className="max-w-4xl mx-auto">
@@ -44,12 +78,25 @@ const AllEmployee = () => {
                   <div key={employee.employee_id} className="">
                      <h2 className="text-xl font-semibold">{`${employee.firstname} ${employee.lastname}`}</h2>
                      <p className="text-gray-400">{employee.department}</p>
-                     <button
-                        onClick={() => handleDelete(employee.employee_id)}
-                        className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                     >
-                        Delete
-                     </button>
+                     <div className="space-x-3">
+                        <button
+                           onClick={() => handleDelete(employee.employee_id)}
+                           className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        >
+                           Delete
+                        </button>
+                        <EditProfile
+                           employee={employee}
+                           onUpdate={async (updatedData: Partial<Employee>) => {
+                              await handleUpdate(
+                                 employee.employee_id,
+                                 updatedData
+                              );
+                              closeModal();
+                           }}
+                           closeModal={closeModal}
+                        />
+                     </div>
                   </div>
                ))}
             </div>
