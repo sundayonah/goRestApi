@@ -61,7 +61,6 @@ export default function Home() {
          console.error('Failed to delete employee:', error);
       }
    };
-   console.log(employees);
 
    return (
       <div className="max-w-6xl mx-auto px-4 mt-32">
@@ -71,54 +70,6 @@ export default function Home() {
          <div className="flex justify-end items-center">
             <CreateProfile />
          </div>
-         {/* <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-               <label htmlFor="firstName" className="block text-sm font-medium">
-                  First Name
-               </label>
-               <input
-                  type="text"
-                  id="firstName"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-               />
-            </div>
-            <div>
-               <label htmlFor="lastName" className="block text-sm font-medium">
-                  Last Name
-               </label>
-               <input
-                  type="text"
-                  id="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-               />
-            </div>
-            <div>
-               <label
-                  htmlFor="department"
-                  className="block text-sm font-medium"
-               >
-                  Department
-               </label>
-               <input
-                  type="text"
-                  id="department"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-               />
-            </div>
-            <button
-               type="submit"
-               className="w-full justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-               Create Employee
-            </button>
-         </form> */}
-
          <div>
             <AllEmployee />
          </div>

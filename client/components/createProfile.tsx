@@ -8,19 +8,16 @@ import {
 } from '@/components/ui/dialog';
 import { useEmployeesManager } from './EmployeeComp';
 import { useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 
 const CreateProfile = () => {
-   const {
-      createEmployee,
-      //   getAllEmployees,
-      //   deleteEmployee,
-   } = useEmployeesManager();
+   const { createEmployee } = useEmployeesManager();
+   const router = useRouter();
 
    const [firstName, setFirstName] = useState('');
    const [lastName, setLastName] = useState('');
    const [department, setDepartment] = useState('');
-   //    const [employees, setEmployees] = useState<Employee[]>([]);
+   // const [employees, setEmployees] = useState<Employee[]>([]);
 
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -32,6 +29,9 @@ const CreateProfile = () => {
          setFirstName('');
          setLastName('');
          setDepartment('');
+         // Navigate to home and refresh
+         router.push('/'); // Navigate to home
+         window.location.reload();
       } catch (error) {
          console.error('Failed to create employee:', error);
       }

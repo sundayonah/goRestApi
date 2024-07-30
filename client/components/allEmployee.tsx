@@ -55,17 +55,10 @@ const AllEmployee = () => {
       }
    };
 
-   // const handleEditClick = (employee: Employee) => {
-   //    console.log(employee);
-   //    setSelectedEmployee(employee);
-   //    setShowEditProfile(true);
+   // const closeModal = () => {
+   //    setShowEditProfile(false);
+   //    setSelectedEmployee(null);
    // };
-   const closeModal = () => {
-      setShowEditProfile(false);
-      setSelectedEmployee(null);
-   };
-
-   console.log(selectedEmployee);
 
    return (
       <div className="p-4 min-h-screen">
@@ -75,7 +68,10 @@ const AllEmployee = () => {
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                {employees.map((employee) => (
-                  <div key={employee.employee_id} className="">
+                  <div
+                     key={employee.employee_id}
+                     className="border p-2 rounded-md shadow-md"
+                  >
                      <h2 className="text-xl font-semibold">{`${employee.firstname} ${employee.lastname}`}</h2>
                      <p className="text-gray-400">{employee.department}</p>
                      <div className="space-x-3">
@@ -92,9 +88,7 @@ const AllEmployee = () => {
                                  employee.employee_id,
                                  updatedData
                               );
-                              closeModal();
                            }}
-                           closeModal={closeModal}
                         />
                      </div>
                   </div>

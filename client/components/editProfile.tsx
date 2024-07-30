@@ -8,18 +8,18 @@ import {
    DialogTrigger,
 } from '@/components/ui/dialog';
 import { useEmployeesManager } from './EmployeeComp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Employee } from '@/types/interfaces';
 
 // Add onUpdate to the props type definition
 interface EditProfileProps {
    employee: Employee | null; // Allow employee to be null
    onUpdate?: (updatedData: Partial<Employee>) => void;
-   closeModal: () => void;
 }
 
-const EditProfile = ({ employee, onUpdate, closeModal }: EditProfileProps) => {
+const EditProfile = ({ employee, onUpdate }: EditProfileProps) => {
    const { updateEmployeeByID } = useEmployeesManager();
+
    const [firstName, setFirstName] = useState(
       employee ? employee.firstname : ''
    );
@@ -27,27 +27,36 @@ const EditProfile = ({ employee, onUpdate, closeModal }: EditProfileProps) => {
    const [department, setDepartment] = useState(
       employee ? employee.department : ''
    );
-   const [isOpen, setIsOpen] = useState(!!employee);
+   const [isOpen, setIsOpen] = useState(false);
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       try {
          const updatedEmployee = { firstName, lastName, department };
          const success = await updateEmployeeByID(
-            employee?.employee_id,
+            employee?.employee_id || '',
             updatedEmployee
          );
          // Call onUpdate if it's provided
          onUpdate?.(updatedEmployee);
          // Close the dialog or refresh the list of employees here
-         closeModal();
       } catch (error) {
          console.error('Failed to update employee:', error);
       }
    };
 
-   console.log(employee);
+   useEffect(() => {
+      if (employee) {
+         setFirstName(employee.firstname);
+         setLastName(employee.lastname);
+         setDepartment(employee.department);
+         setIsOpen(false);
+      } else {
+         setIsOpen(false);
+      }
+   }, [employee]);
+
    return (
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
          <DialogTrigger className="font-bold justify-center py-2 px-4 border border-transparent shadow-sm text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Edit
          </DialogTrigger>
